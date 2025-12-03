@@ -1,0 +1,1033 @@
+/* =================== GLOBAL =================== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body {
+    background: radial-gradient(circle at top, #1f3b63 0%, #071828 45%, #020816 100%);
+    color: #ffffff;
+    min-height: 100vh;
+}
+
+a {
+    text-decoration: none;
+    color: #ffffff; /* force white */
+}
+
+/* =================== NAVBAR =================== */
+.navbar {
+    width: 100%;
+    background: linear-gradient(to right, #050b13, #071828);
+    padding: 14px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-left {
+    display: flex;
+    gap: 24px;
+}
+
+.nav-link {
+    font-size: 15px;
+    color: #ffffff !important;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+}
+
+.nav-link:hover {
+    color: #ff4b5c !important;
+}
+
+.nav-link.active {
+    color: #ff4b5c !important;
+    border-color: #ff4b5c;
+}
+
+/* Profile */
+.nav-right {
+    display: flex;
+    align-items: center;
+}
+
+.profile-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    position: relative;
+}
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #7b2cbf;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    color: #ffffff;
+    font-size: 17px;
+}
+
+.profile-dots {
+    font-size: 16px;
+    color: #ffffff;
+}
+
+/* dropdown */
+.profile-menu {
+    position: absolute;
+    right: 0;
+    top: 46px;
+    background: #ffffff;
+    color: #111827;
+    border-radius: 12px;
+    padding: 10px 14px;
+    min-width: 180px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+    display: none;
+}
+
+.profile-menu.show {
+    display: block;
+}
+
+.profile-name {
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.profile-menu a.logout {
+    color: #dc2626 !important;
+}
+
+/* =================== HEADER =================== */
+.dashboard-header {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 24px;
+}
+
+.dashboard-header h1 {
+    font-size: 40px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.dashboard-header p {
+    font-size: 16px;
+    color: #e5e7eb !important;
+}
+
+.header-buttons {
+    margin-top: 22px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+}
+
+/* Buttons */
+.btn-red {
+    background: #ef4444;
+    color: #ffffff !important;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.btn-red:hover {
+    background: #dc2626;
+}
+
+.btn-outline-red {
+    background: transparent;
+    color: #ffffff !important;
+    border-radius: 999px;
+    padding: 10px 22px;
+    border: 1px solid #ffffff;
+    font-weight: 600;
+}
+
+.btn-outline-red:hover {
+    background: #f97373;
+    color: #111827;
+}
+
+/* success message */
+.success-msg {
+    margin-top: 16px;
+    display: inline-block;
+    background: rgba(22, 163, 74, 0.12);
+    color: #bbf7d0 !important;
+    border: 1px solid #22c55e;
+    padding: 8px 14px;
+    border-radius: 999px;
+}
+
+/* =================== SEARCH / FILTER BAR =================== */
+.search-filter-container {
+    margin: 30px auto;
+    max-width: 1050px;
+    display: grid;
+    grid-template-columns: 2fr 1.1fr 1.1fr 1.1fr 0.7fr;
+    gap: 12px;
+}
+
+.search-filter-container input,
+.search-filter-container select {
+    background: rgba(15, 23, 42, 0.85);
+    border: 1px solid rgba(148, 163, 184, 0.6);
+    border-radius: 999px;
+    padding: 9px 14px;
+    color: #ffffff !important;
+}
+
+.search-filter-container input::placeholder {
+    color: #d1d5db !important;
+}
+
+.btn-reset {
+    background: #ef4444;
+    border: none;
+    border-radius: 999px;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* =================== MOVIE GRID =================== */
+.movie-grid {
+    max-width: 1150px;
+    margin: 30px auto;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.movie-card {
+    position: relative;
+    background: #0d111a;
+    padding: 14px;
+    border-radius: 24px;
+    width: 250px;
+}
+
+.movie-card img {
+    width: 100%;
+    height: 200px;
+    border-radius: 18px;
+    object-fit: cover;
+}
+
+/* poster */
+.movie-poster-wrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 150%;
+}
+
+.movie-poster-wrapper img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* watched/unwatched badge */
+.status-toggle {
+    position: absolute !important;
+    top: 10px !important;
+    right: 10px !important;
+    z-index: 9999 !important;
+    background: rgba(0,0,0,0.7) !important;
+}
+
+.status-toggle.watched {
+    background: rgba(22, 163, 74, 0.85);
+}
+
+/* movie info */
+.movie-info {
+    padding: 10px 13px 12px;
+}
+
+.movie-title,
+.movie-meta,
+.movie-info * {
+    color: #ffffff !important;
+}
+
+.movie-meta {
+    font-size: 12px;
+    opacity: 0.8;
+}
+
+/* buttons in cards */
+.movie-actions button {
+    border-radius: 999px;
+    font-size: 12px;
+    padding: 6px 0;
+    cursor: pointer;
+    color: #ffffff !important;
+}
+
+.edit-btn {
+    background: #1f2937;
+}
+
+.delete-btn {
+    background: #ef4444;
+}
+
+/* =================== COMMENTS (HIDDEN UNTIL HOVER) =================== */
+.movie-comments,
+.comment-section,
+.movie-notes {
+    background: rgba(15, 23, 42, 0.95);
+    border-radius: 12px;
+    padding: 8px 9px;
+    color: #ffffff !important;
+    font-size: 12px;
+    margin-top: 6px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(6px);
+    transition: 0.18s ease;
+}
+
+.movie-card:hover .movie-comments,
+.movie-card:hover .comment-section,
+.movie-card:hover .movie-notes {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+/* =================== WATCHLIST PREVIEW =================== */
+.watchlist-section {
+    max-width: 1150px;
+    margin: 30px auto;
+}
+
+.watchlist-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #ffffff !important;
+}
+
+.watchlist-subtitle {
+    color: #ffffff !important;
+    opacity: 0.7;
+}
+
+.watchlist-card {
+    background: #020617;
+    color: #ffffff !important;
+    border-radius: 16px;
+    padding: 10px 12px;
+    min-width: 190px;
+    border: 1px solid rgba(148, 163, 184, 0.5);
+}
+
+/* =================== POPUPS =================== */
+.popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(15, 23, 42, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.popup-content {
+    background: #020617;
+    border-radius: 18px;
+    padding: 22px;
+    width: 100%;
+    max-width: 420px;
+    color: #ffffff !important;
+}
+
+.popup-content label,
+.popup-content input,
+.popup-content textarea {
+    color: #ffffff !important;
+}
+
+.popup-content input,
+.popup-content textarea {
+    background: #020617;
+    border: 1px solid #94a3b8;
+}
+
+.popup-close {
+    position: absolute;
+    right: 14px;
+    top: 10px;
+    background: transparent;
+    border: none;
+    color: #ffffff !important;
+}
+
+.save-btn {
+    background: #ef4444;
+    border: none;
+    border-radius: 999px;
+    color: white;
+    padding: 8px 16px;
+}
+
+.cancel-btn {
+    background: transparent;
+    border-radius: 999px;
+    border: 1px solid #6b7280;
+    color: #ffffff;
+}
+
+/* =================== RESPONSIVE =================== */
+@media (max-width: 900px) {
+    .navbar {
+        padding: 12px 18px;
+    }
+
+    .search-filter-container {
+        grid-template-columns: 1fr 1fr;
+        max-width: 92%;
+    }
+
+    .movie-grid {
+        max-width: 92%;
+    }
+}
+
+@media (max-width: 600px) {
+    .dashboard-header h1 {
+        font-size: 30px;
+    }
+
+    .header-buttons {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search-filter-container {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =================== FIX EDIT / DELETE BUTTONS =================== */
+.movie-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.movie-actions a,
+.movie-actions button {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+}
+
+/* EDIT BUTTON */
+.movie-actions .edit-btn,
+.movie-actions a.edit-btn {
+    background: rgba(255, 255, 255, 0.12);
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.movie-actions .edit-btn:hover,
+.movie-actions a.edit-btn:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+/* DELETE BUTTON */
+.movie-actions .delete-btn,
+.movie-actions a.delete-btn {
+    background: #ef4444;
+    color: white !important;
+    border: none;
+}
+
+.movie-actions .delete-btn:hover,
+.movie-actions a.delete-btn:hover {
+    background: #dc2626;
+}
+
+/* ========================= POPUP BACKDROP ========================= */
+.popup {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+/* ========================= POPUP CONTAINER ========================= */
+.popup-content {
+    background: #0d111a;
+    border-radius: 18px;
+    padding: 26px 26px 20px;
+    width: 100%;
+    max-width: 460px;
+    color: #ffffff;
+    position: relative;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.55);
+    animation: popupAppear 0.22s ease-out;
+}
+
+/* fade/scale animation */
+@keyframes popupAppear {
+    from { opacity: 0; transform: scale(0.92); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+/* ========================= CLOSE BUTTON ========================= */
+.popup-close {
+    position: absolute;
+    right: 14px;
+    top: 14px;
+    background: transparent;
+    border: none;
+    color: #9ca3af;
+    font-size: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.popup-close:hover {
+    color: #ffffff;
+    transform: scale(1.15);
+}
+
+/* ========================= FORM TITLE ========================= */
+.popup-content h2 {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ffffff;
+}
+
+/* ========================= FORM GRID ========================= */
+.popup-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px 18px;
+}
+
+.popup-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-form .form-group.full {
+    grid-column: span 2;
+}
+
+/* ========================= LABELS ========================= */
+.popup-content label {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #d1d5db;
+}
+
+/* ========================= INPUTS & TEXTAREAS ========================= */
+.popup-content input,
+.popup-content select,
+.popup-content textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: #ffffff;
+    background: #141a24;
+    border: 1px solid #4b5563;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.15s ease;
+}
+
+.popup-content input:focus,
+.popup-content textarea:focus,
+.popup-content select:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25);
+}
+
+.popup-content textarea {
+    min-height: 90px;
+    resize: vertical;
+}
+
+/* ========================= BUTTONS ========================= */
+.popup-buttons {
+    grid-column: span 2;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 14px;
+}
+
+.save-btn {
+    background: #ef4444;
+    color: #ffffff;
+    border: none;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.save-btn:hover {
+    background: #dc2626;
+    transform: translateY(-1px);
+}
+
+.cancel-btn {
+    background: transparent;
+    border: 1px solid #6b7280;
+    color: #ffffff;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: 0.15s ease;
+}
+
+.cancel-btn:hover {
+    border-color: #ffffff;
+}
+
+/* ---------- PROFILE DROPDOWN FIX ---------- */
+.profile-wrapper {
+    position: relative;
+}
+
+.profile-dropdown {
+    position: absolute;
+    top: 55px;
+    right: 0;
+    background: #fff;
+    color: #111;
+    padding: 18px 22px;
+    border-radius: 14px;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.25);
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    width: 200px;
+    z-index: 999;
+}
+
+.profile-dropdown.show {
+    display: flex;
+}
+
+.profile-dropdown a {
+    text-decoration: none;
+    color: #111;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-dropdown a:hover {
+    color: #e50914;
+}
+
+/* ========================= ERROR & SUCCESS MESSAGE STYLES ========================= */
+.error-message {
+    padding: 12px;
+    background: #ffcccc;
+    border-left: 4px solid red;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #900;
+}
+
+.success-message {
+    padding: 12px;
+    background: #ccffcc;
+    border-left: 4px solid green;
+    margin-bottom: 15px;
+    font-weight: bold;
+    color: #060;
+}
+
+/* ========================= FADE-OUT ANIMATION FOR MESSAGES ========================= */
+.error-message.fade-out,
+.success-message.fade-out {
+    opacity: 0;
+    transition: opacity 0.6s ease;
+}
+/* ===== FIXED COMMENT MODAL SCROLLING ===== */
+#commentsModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+#commentsModal.show {
+    display: flex;
+}
+
+#commentsModal .modal-content {
+    background: #2d2d2d;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 700px;
+    height: 80vh; /* Use viewport height instead of max-height */
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #555;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+}
+
+.modal-header {
+    background: #3d3d3d;
+    padding: 20px;
+    border-bottom: 1px solid #555;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-shrink: 0; /* Prevent header from shrinking */
+}
+
+.modal-header h3 {
+    color: white;
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.close-btn:hover {
+    color: white;
+}
+
+.modal-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Take remaining space */
+    overflow: hidden; /* Important for scrolling */
+    gap: 15px;
+}
+
+/* Comment form - fixed height */
+.comment-form {
+    background: #3d3d3d;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #555;
+    flex-shrink: 0; /* Don't shrink */
+}
+
+.comment-form textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #666;
+    border-radius: 6px;
+    background: #1a1a1a;
+    color: white;
+    font-size: 14px;
+    resize: vertical;
+    min-height: 80px;
+    margin-bottom: 10px;
+}
+
+.comment-form textarea:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.comment-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment-actions .btn {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.comment-actions .btn:hover {
+    background: #0056b3;
+}
+
+#charCount {
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* Comment controls - fixed height */
+.comment-controls {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr auto;
+    gap: 10px;
+    flex-shrink: 0; /* Don't shrink */
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    color: #ccc;
+    font-size: 12px;
+    margin-bottom: 4px;
+}
+
+.filter-select {
+    padding: 8px 10px;
+    border: 1px solid #666;
+    border-radius: 6px;
+    background: #1a1a1a;
+    color: white;
+    font-size: 14px;
+}
+
+.filter-select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+.btn-secondary {
+    background: #6c757d !important;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.btn-secondary:hover {
+    background: #545b62 !important;
+}
+
+/* Comments list - scrollable area */
+.comments-list {
+    flex: 1; /* Take all available space */
+    overflow-y: auto; /* Enable vertical scrolling */
+    background: #3d3d3d;
+    border-radius: 8px;
+    border: 1px solid #555;
+    padding: 15px;
+    min-height: 200px;
+}
+
+/* Custom scrollbar styling */
+.comments-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.comments-list::-webkit-scrollbar-track {
+    background: #2d2d2d;
+    border-radius: 4px;
+}
+
+.comments-list::-webkit-scrollbar-thumb {
+    background: #666;
+    border-radius: 4px;
+}
+
+.comments-list::-webkit-scrollbar-thumb:hover {
+    background: #888;
+}
+
+/* Firefox scrollbar */
+.comments-list {
+    scrollbar-width: thin;
+    scrollbar-color: #666 #2d2d2d;
+}
+
+/* Comment items */
+.comment-item {
+    background: #2d2d2d;
+    padding: 15px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border-left: 4px solid #007bff;
+}
+
+.comment-item:last-child {
+    margin-bottom: 0;
+}
+
+.comment-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.comment-author {
+    color: #4da6ff;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.comment-meta {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.comment-date {
+    color: #999;
+    font-size: 12px;
+}
+
+.comment-rating {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.comment-text {
+    color: #ddd;
+    line-height: 1.5;
+    margin-bottom: 10px;
+    font-size: 14px;
+    word-wrap: break-word;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.comment-btn {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.edit-comment-btn {
+    background: #28a745;
+    color: white;
+}
+
+.edit-comment-btn:hover {
+    background: #218838;
+    transform: translateY(-1px);
+}
+
+.delete-comment-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.delete-comment-btn:hover {
+    background: #c82333;
+    transform: translateY(-1px);
+}
+
+/* Comment Stats */
+.comment-stats {
+    background: linear-gradient(135deg, #3d3d3d 0%, #2d2d2d 100%);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #555;
+    flex-shrink: 0;
+}
+
+/* Responsive design for mobile */
+@media (max-width: 768px) {
+    #commentsModal .modal-content {
+        width: 95%;
+        height: 85vh;
+        margin: 10px;
+    }
+    
+    .comment-controls {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+    
+    .modal-body {
+        padding: 15px;
+        gap: 12px;
+    }
+    
+    .comments-list {
+        padding: 12px;
+    }
+}
+
+/* Prevent body scroll when modal is open */
+body.modal-open {
+    overflow: hidden;
+}
+
+/* Eye button visibility improvements */
+.watch-toggle-btn i {
+    font-size: 1.3rem;       /* slightly bigger */
+    color: #222 !important;  /* strong dark color so it's always visible */
+}
+
+/* When the movie is watched, still show a clear icon */
+.movie-card.watched .watch-toggle-btn i {
+    color: #111 !important;
+}
