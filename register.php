@@ -1,4 +1,3 @@
-
 <?php
 
 // This file validates registration data and initiates security questions setup
@@ -62,13 +61,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 // Hash password for secure storage using bcrypt algorithm
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 
-                // Get 4 active security questions for user to answer
-                $questionStmt = $pdo->query("SELECT question_id, question_text, expected_data_type FROM security_questions WHERE is_active = TRUE ORDER BY RAND() LIMIT 4");
+                // Get 3 active security questions for user to answer
+                // RAND() randomizes the order, LIMIT 3 gets exactly 3 questions
+                $questionStmt = $pdo->query("SELECT question_id, question_text, expected_data_type FROM security_questions WHERE is_active = TRUE ORDER BY RAND() LIMIT 3");
                 $questions = $questionStmt->fetchAll();
                 
-                // Verify we got exactly 4 questions
-                if (count($questions) < 4) {
-                    header("Location: index.php?message=System error: Not enough security questions&status=error");
+                // Initialize $questions as empty array if fetchAll() fails
+                if ($questions === false) {
+                    $questions = [];
+                }
+                
+                // Verify we got exactly 3 questions
+                if (count($questions) < 3) {
+                    header("Location: index.php?message=System error: Not enough security questions available&status=error");
                     exit; // Stop if insufficient questions
                 }
                 

@@ -26,43 +26,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $hashedAnswer2 = password_hash(strtolower($answer2), PASSWORD_DEFAULT);
             $hashedAnswer3 = password_hash(strtolower($answer3), PASSWORD_DEFAULT);
             
-            // Insert user with security questions
-            $stmt = $pdo->prepare("INSERT INTO users (username, email, password, security_question_1_id, security_answer_1_hash, security_question_2_id, security_answer_2_hash, security_question_3_id, security_answer_3_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            // Check if username already exists to prevent duplicate entry
+            $checkUserStmt = $pdo->prepare("SELECT user_id FROM users WHERE username = ?");
+            $checkUserStmt->execute([$user_data['username']]);
             
-            $stmt->execute([
-                $user_data['username'],
-                $user_data['email'], 
-                $user_data['password_hash'],
-                $user_data['question1_id'],
-                $hashedAnswer1,
-                $user_data['question2_id'],
-                $hashedAnswer2, 
-                $user_data['question3_id'],
-                $hashedAnswer3
-            ]);
-            
-            // Clear session and redirect to login
-            unset($_SESSION['registering_user']);
-            header("Location: login.php?message=Registration successful! Please login.&status=success");
-            exit;
+            if ($checkUserStmt->fetch()) {
+                $error = "Username already exists. Please choose a different username.";
+            } else {
+                // Insert user with security questions
+                $stmt = $pdo->prepare("INSERT INTO users (username, email, password, security_question_1_id, security_answer_1_hash, security_question_2_id, security_answer_2_hash, security_question_3_id, security_answer_3_hash) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                
+                // Get question IDs from the questions array
+                $question1_id = $user_data['questions'][0]['question_id'];
+                $question2_id = $user_data['questions'][1]['question_id'];
+                $question3_id = $user_data['questions'][2]['question_id'];
+                
+                $stmt->execute([
+                    $user_data['username'],
+                    $user_data['email'], 
+                    $user_data['password_hash'],
+                    $question1_id,
+                    $hashedAnswer1,
+                    $question2_id,
+                    $hashedAnswer2, 
+                    $question3_id,
+                    $hashedAnswer3
+                ]);
+                
+                // Clear session and redirect to login
+                unset($_SESSION['registering_user']);
+                header("Location: login.php?message=Registration successful! Please login.&status=success");
+                exit;
+            }
             
         } catch (PDOException $e) {
-            $error = "Database error: " . $e->getMessage();
+            // Check if it's a duplicate entry error
+            if ($e->errorInfo[1] == 1062) {
+                $error = "Username or email already exists. Please choose different credentials.";
+            } else {
+                $error = "Database error: " . $e->getMessage();
+            }
         }
     }
 }
 
-// Get random security questions
-try {
-    $stmt = $pdo->query("SELECT question_id, question_text, expected_data_type FROM security_questions WHERE is_active = TRUE ORDER BY RAND() LIMIT 3");
-    $questions = $stmt->fetchAll();
-    
-    if (count($questions) < 3) {
-        die("Not enough security questions in database");
+// Check if we already have questions in session, otherwise fetch new ones
+if (!isset($_SESSION['registering_user']['questions']) || count($_SESSION['registering_user']['questions']) < 3) {
+    try {
+        $stmt = $pdo->query("SELECT question_id, question_text, expected_data_type FROM security_questions WHERE is_active = TRUE ORDER BY RAND() LIMIT 3");
+        $questions = $stmt->fetchAll();
+        
+        if (count($questions) < 3) {
+            die("Not enough security questions in database");
+        }
+        
+        // Store questions in session
+        $_SESSION['registering_user']['questions'] = $questions;
+        
+    } catch (PDOException $e) {
+        die("Database error: " . $e->getMessage());
     }
-    
-} catch (PDOException $e) {
-    die("Database error: " . $e->getMessage());
+} else {
+    $questions = $_SESSION['registering_user']['questions'];
 }
 ?>
 <!DOCTYPE html>
@@ -136,6 +161,10 @@ try {
                 
                 <button type="submit" class="btn">Complete Registration</button>
             </form>
+            
+            <div class="login-link">
+                <a href="index.php">Back to Registration</a>
+            </div>
         </div>
     </div>
 </body>
